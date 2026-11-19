@@ -4,6 +4,9 @@ A self-hosted AI chat assistant for WordPress. It answers visitor questions from
 
 Built by HTECH Digital Solutions.
 
+**Repository:** https://github.com/Htechdigitalconcept/Free-Website-Chatbot-AI-by-HTECH
+
+
 ---
 
 ## What it actually does

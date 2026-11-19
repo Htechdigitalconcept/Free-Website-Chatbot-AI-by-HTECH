@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Free Website Chatbot AI by HTECH
- * Plugin URI:        https://htechdigital.com/
+ * Plugin URI:        https://github.com/Htechdigitalconcept/Free-Website-Chatbot-AI-by-HTECH
  * Description:       Self-hosted, private, browser-AI chatbot with a business knowledge base, document retrieval and lead capture. No paid APIs required.
  * Version:           1.0.1
  * Requires at least: 6.0

@@ -7,6 +7,7 @@ Requires PHP: 7.4
 Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Plugin URI: https://github.com/Htechdigitalconcept/Free-Website-Chatbot-AI-by-HTECH
 
 A self-hosted AI chatbot with a business knowledge base, private document retrieval and optional on-device AI. No paid APIs, no subscriptions, no central server.
 
