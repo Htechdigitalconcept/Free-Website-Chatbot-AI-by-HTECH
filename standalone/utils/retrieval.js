@@ -1,5 +1,5 @@
 /**
- * HTECH AI Assistant — client-side retrieval engine (standalone build).
+ * Free Website Chatbot AI by HTECH — client-side retrieval engine (standalone build).
  *
  * A faithful re-implementation of the plugin's server-side BM25 scorer so a
  * static site gets the same answer quality without any backend:

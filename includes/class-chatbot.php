@@ -1260,7 +1260,7 @@ class HTECH_AI_Chatbot {
 		);
 
 		$lines = array(
-			sprintf( __( 'Lead #%d received by the HTECH AI Assistant.', 'htech-ai-assistant' ), $lead_id ),
+			sprintf( __( 'Lead #%d received by Free Website Chatbot AI by HTECH.', 'htech-ai-assistant' ), $lead_id ),
 			'',
 			__( 'Name:', 'htech-ai-assistant' ) . ' ' . $lead['name'],
 			__( 'Email:', 'htech-ai-assistant' ) . ' ' . $lead['email'],

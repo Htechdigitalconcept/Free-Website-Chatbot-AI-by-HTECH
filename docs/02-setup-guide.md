@@ -8,7 +8,7 @@ Settings are grouped exactly as they appear in the admin menu. Follow them in th
 
 ## 1 · Chatbot Settings
 
-**Where:** HTECH AI Assistant → Chatbot Settings
+**Where:** Free Website Chatbot AI by HTECH → Chatbot Settings
 
 | Field | What it does | Good value |
 | --- | --- | --- |
@@ -28,7 +28,7 @@ Settings are grouped exactly as they appear in the admin menu. Follow them in th
 
 ## 2 · Knowledge Base
 
-**Where:** HTECH AI Assistant → Knowledge Base
+**Where:** Free Website Chatbot AI by HTECH → Knowledge Base
 
 This is the single most important screen. **The assistant can only state what is written here** (or in your uploaded documents). It cannot look at your website, your product database, or the internet.
 
@@ -91,7 +91,7 @@ The **Test retrieval** box on the same screen lets you type a real visitor quest
 
 ## 3 · Documents
 
-**Where:** HTECH AI Assistant → Documents
+**Where:** Free Website Chatbot AI by HTECH → Documents
 
 Upload existing files instead of retyping them: price lists, service catalogues, policy PDFs, product CSVs.
 
@@ -110,7 +110,7 @@ Practical notes:
 
 ## 4 · Appearance & Branding
 
-**Where:** HTECH AI Assistant → Appearance & Branding
+**Where:** Free Website Chatbot AI by HTECH → Appearance & Branding
 
 Everything here is live-previewed on the right, in desktop and mobile widths, before you save.
 
@@ -153,7 +153,7 @@ Floating launcher vs inline, corner position, width, height, corner radius, head
 - **Online / offline status** — the green dot and its label.
 - **Display name** — overrides the assistant name in the header for this widget instance.
 - **Clear conversation on close** — off by default; on suits kiosks and shared devices.
-- **Attribution** — the optional "Powered by HTECH AI Assistant" footer line. Off by default.
+- **Attribution** — the optional "Powered by Free Website Chatbot AI by HTECH" footer line. Off by default.
 
 ---
 
@@ -171,7 +171,7 @@ Captured leads are stored in your WordPress database and exportable as CSV.
 
 ## 6 · Installation
 
-**Where:** HTECH AI Assistant → Installation
+**Where:** Free Website Chatbot AI by HTECH → Installation
 
 - **Enable the chat widget** — the master on/off switch.
 - **Shortcode reference** — copy-paste examples with a one-click copy button.

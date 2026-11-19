@@ -544,7 +544,7 @@ class HTECH_AI_Settings {
 				'leadSubmit'    => __( 'Send details', 'htech-ai-assistant' ),
 				'leadCancel'    => __( 'Cancel', 'htech-ai-assistant' ),
 				'sources'       => __( 'Source', 'htech-ai-assistant' ),
-				'poweredBy'     => __( 'Powered by HTECH AI Assistant', 'htech-ai-assistant' ),
+				'poweredBy'     => __( 'Powered by Free Website Chatbot AI by HTECH', 'htech-ai-assistant' ),
 				'modelReady'    => __( 'AI ready', 'htech-ai-assistant' ),
 			),
 		);

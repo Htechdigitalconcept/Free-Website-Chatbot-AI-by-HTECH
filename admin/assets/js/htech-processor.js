@@ -1,5 +1,5 @@
 /**
- * HTECH AI Assistant — browser document processor.
+ * Free Website Chatbot AI by HTECH — browser document processor.
  *
  * Extracts text from PDF (PDF.js), DOCX (Mammoth.js), TXT, MD, CSV and JSON
  * locally in the administrator's browser. Documents themselves never leave

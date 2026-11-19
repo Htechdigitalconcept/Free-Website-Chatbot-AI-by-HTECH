@@ -31,7 +31,7 @@ On activation the plugin:
 - writes its default settings,
 - protects its upload directory,
 - adds clearly-labelled **sample content** to the knowledge base,
-- sends you to **HTECH AI Assistant → Overview**.
+- sends you to **Free Website Chatbot AI by HTECH → Overview**.
 
 The Overview screen should show `Widget live` next to the title and non-zero numbers for Knowledge Chunks. If it shows zeros everywhere, see [Troubleshooting](05-troubleshooting.md).
 
@@ -45,7 +45,7 @@ Click it and ask something the sample content covers, like *"What are your openi
 
 If you see no button, work through these in order:
 
-1. **HTECH AI Assistant → Installation** — is the widget toggle on?
+1. **Free Website Chatbot AI by HTECH → Installation** — is the widget toggle on?
 2. View the page source and search for `htech-ai-launcher`. If it is missing, the shortcode/footer hook is not running — usually a theme that does not call `wp_footer`.
 3. Clear any page cache or CDN cache.
 4. Check that a JavaScript error in another plugin is not breaking the page (open the browser console).
@@ -119,7 +119,7 @@ Every database change uses `dbDelta` and runs through a version check, so updati
 
 ### Removing all data on uninstall
 
-1. Go to **HTECH AI Assistant → General Settings**.
+1. Go to **Free Website Chatbot AI by HTECH → General Settings**.
 2. Enable **Delete all data when the plugin is uninstalled**.
 3. Save.
 4. Deactivate and delete the plugin.

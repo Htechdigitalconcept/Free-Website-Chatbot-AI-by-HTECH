@@ -1,5 +1,5 @@
 /**
- * HTECH AI Assistant — admin application.
+ * Free Website Chatbot AI by HTECH — admin application.
  *
  * Plain ES5-compatible-ish JS (no build step required in production).
  * Every request goes through the WordPress REST API with a wp_rest nonce.

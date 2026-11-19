@@ -74,7 +74,7 @@ HTECH_AI_Admin::shell_start(
 	<div class="htech-alert htech-alert--success">
 		<span class="dashicons dashicons-superhero"></span>
 		<div>
-			<strong><?php esc_html_e( 'HTECH AI Assistant is installed on this site.', 'htech-ai-assistant' ); ?></strong>
+			<strong><?php esc_html_e( 'Free Website Chatbot AI by HTECH is installed on this site.', 'htech-ai-assistant' ); ?></strong>
 			<p><?php esc_html_e( 'Your widget is already working in knowledge-base mode. Add business information so it can answer accurately, then customise the branding.', 'htech-ai-assistant' ); ?></p>
 		</div>
 	</div>

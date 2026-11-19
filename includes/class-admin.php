@@ -59,8 +59,10 @@ class HTECH_AI_Admin {
 		);
 
 		add_menu_page(
-			__( 'HTECH AI Assistant', 'htech-ai-assistant' ),
-			__( 'HTECH AI Assistant', 'htech-ai-assistant' ),
+			__( 'Free Website Chatbot AI by HTECH', 'htech-ai-assistant' ),
+			// Short label for the WordPress admin sidebar; the long product name
+			// wraps to three cramped lines there.
+			__( 'Website Chatbot AI', 'htech-ai-assistant' ),
 			$this->cap,
 			'htech-ai-assistant',
 			array( $this, 'render_page' ),
@@ -394,7 +396,7 @@ class HTECH_AI_Admin {
 		echo esc_html(
 			sprintf(
 				/* translators: 1: conversation id, 2: created date */
-				__( "HTECH AI Assistant — conversation #%1\$d\nCreated: %2\$s\n\n", 'htech-ai-assistant' ),
+				__( "Free Website Chatbot AI by HTECH — conversation #%1\$d\nCreated: %2\$s\n\n", 'htech-ai-assistant' ),
 				$id,
 				$conversation['created_at']
 			)
@@ -486,7 +488,7 @@ class HTECH_AI_Admin {
 				<div class="htech-sidebar__brand">
 					<div class="htech-sidebar__mark">HC</div>
 					<div class="htech-sidebar__title">
-						<?php esc_html_e( 'HTECH AI Assistant', 'htech-ai-assistant' ); ?>
+						<?php esc_html_e( 'Free Website Chatbot AI by HTECH', 'htech-ai-assistant' ); ?>
 						<span><?php esc_html_e( 'Self-hosted chatbot', 'htech-ai-assistant' ); ?></span>
 					</div>
 				</div>

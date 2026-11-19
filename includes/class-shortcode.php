@@ -194,7 +194,7 @@ class HTECH_AI_Shortcode {
 
 		if ( 'floating' === $mode && ! HTECH_AI_Settings::is_enabled( 'widget_enabled' ) ) {
 			if ( current_user_can( HTECH_AI_Security::capability() ) ) {
-				return '<p class="htech-ai-admin-note"><em>' . esc_html__( 'HTECH AI Assistant: the widget is currently disabled in Chatbot Settings.', 'htech-ai-assistant' ) . '</em></p>';
+				return '<p class="htech-ai-admin-note"><em>' . esc_html__( 'Free Website Chatbot AI by HTECH: the widget is currently disabled in Chatbot Settings.', 'htech-ai-assistant' ) . '</em></p>';
 			}
 			return '';
 		}

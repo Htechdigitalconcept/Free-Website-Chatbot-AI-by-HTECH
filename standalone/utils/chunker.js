@@ -1,5 +1,5 @@
 /**
- * HTECH AI Assistant — text extraction & chunking for the standalone build.
+ * Free Website Chatbot AI by HTECH — text extraction & chunking for the standalone build.
  *
  * Used by the optional "build knowledge" page, which lets a site owner drop PDF,
  * DOCX, TXT or CSV files into the browser and download a ready-to-use

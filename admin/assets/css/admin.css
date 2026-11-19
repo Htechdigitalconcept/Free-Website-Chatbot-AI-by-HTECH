@@ -75,10 +75,14 @@
 }
 
 .htech-sidebar__title {
-	font-size: 13px;
+	font-size: 12px;
 	font-weight: 700;
-	line-height: 1.25;
+	line-height: 1.3;
+	letter-spacing: -0.1px;
 	color: #fff;
+	/* Long product names must wrap on word boundaries, never mid-word. */
+	overflow-wrap: break-word;
+	hyphens: none;
 }
 
 .htech-sidebar__title span {

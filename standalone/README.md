@@ -1,4 +1,4 @@
-# HTECH AI Assistant — standalone build
+# Free Website Chatbot AI by HTECH — standalone build
 
 The same chat widget for sites that are **not** WordPress: static HTML, a landing page, a React/Vue app, or a single hand-written page.
 
@@ -62,7 +62,7 @@ That is it. The launcher appears bottom-right.
 
 If you also run the WordPress plugin, you have already written and tested your content there:
 
-1. WP Admin → **HTECH AI Assistant → Installation**
+1. WP Admin → **Free Website Chatbot AI by HTECH → Installation**
 2. Click **Download knowledge snapshot**
 3. Save as `htech/knowledge.json`
 

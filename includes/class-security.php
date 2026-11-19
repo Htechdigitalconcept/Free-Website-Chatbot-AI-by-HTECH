@@ -58,7 +58,7 @@ class HTECH_AI_Security {
 	 */
 	public static function capability() {
 		/**
-		 * Filter the capability required to manage HTECH AI Assistant.
+		 * Filter the capability required to manage Free Website Chatbot AI by HTECH.
 		 *
 		 * @param string $capability Capability name.
 		 */

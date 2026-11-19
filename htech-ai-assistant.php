@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name:       HTECH AI Assistant
+ * Plugin Name:       Free Website Chatbot AI by HTECH
  * Plugin URI:        https://htechdigital.com/
  * Description:       Self-hosted, private, browser-AI chatbot with a business knowledge base, document retrieval and lead capture. No paid APIs required.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            HTECH Digital Solutions
@@ -18,7 +18,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'HTECH_AI_VERSION', '1.0.0' );
+define( 'HTECH_AI_VERSION', '1.0.1' );
 define( 'HTECH_AI_FILE', __FILE__ );
 define( 'HTECH_AI_DIR', plugin_dir_path( __FILE__ ) );
 define( 'HTECH_AI_URL', plugin_dir_url( __FILE__ ) );
@@ -38,7 +38,7 @@ if ( version_compare( PHP_VERSION, HTECH_AI_MIN_PHP, '<' ) ) {
 				esc_html(
 					sprintf(
 						/* translators: 1: required PHP version, 2: current PHP version */
-						__( 'HTECH AI Assistant requires PHP %1$s or newer. This server runs PHP %2$s, so the plugin has not been loaded.', 'htech-ai-assistant' ),
+						__( 'Free Website Chatbot AI by HTECH requires PHP %1$s or newer. This server runs PHP %2$s, so the plugin has not been loaded.', 'htech-ai-assistant' ),
 						HTECH_AI_MIN_PHP,
 						PHP_VERSION
 					)

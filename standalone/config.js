@@ -1,5 +1,5 @@
 /**
- * HTECH AI Assistant — standalone configuration.
+ * Free Website Chatbot AI by HTECH — standalone configuration.
  *
  * This is the ONLY file most installs need to edit. Everything else in this
  * folder is the widget itself.
@@ -100,7 +100,7 @@ window.HTECH_AI_CONFIG = {
 
 	/* ---------------------------------------------------------------- knowledge */
 	/*
-	 * The knowledge file exported from WordPress (HTECH AI Assistant →
+	 * The knowledge file exported from WordPress (Free Website Chatbot AI by HTECH →
 	 * Installation → Standalone bundle) or produced by build.html.
 	 * Set `knowledge` inline instead if you prefer to inline the data.
 	 */

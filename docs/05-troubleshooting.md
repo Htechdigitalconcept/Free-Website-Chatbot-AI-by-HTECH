@@ -2,14 +2,14 @@
 
 Symptom → cause → fix. Start here before anything else.
 
-**First stop:** HTECH AI Assistant → **Overview**. The *Setup checklist* and *AI engine status* panels report the live state of every subsystem. Most problems are visible there.
+**First stop:** Free Website Chatbot AI by HTECH → **Overview**. The *Setup checklist* and *AI engine status* panels report the live state of every subsystem. Most problems are visible there.
 
 ---
 
 ## The widget does not appear
 
 **1. Is it enabled?**
-HTECH AI Assistant → Installation → *Enable the chat widget*. The Overview header should read `Widget live`.
+Free Website Chatbot AI by HTECH → Installation → *Enable the chat widget*. The Overview header should read `Widget live`.
 
 **2. Is the page cached?**
 Your page cache or CDN is serving HTML from before activation. Purge it, and exclude pages from full-page caching while debugging.

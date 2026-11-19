@@ -1,4 +1,4 @@
-# HTECH AI Assistant
+# Free Website Chatbot AI by HTECH
 
 A self-hosted AI chat assistant for WordPress. It answers visitor questions from **your own business content** — no paid AI API, no API key, no subscription, no external server.
 
@@ -40,7 +40,7 @@ The PDF library, the DOCX library and the AI runtime are bundled or loaded from 
 1. In WordPress go to **Plugins → Add New → Upload Plugin**.
 2. Choose `htech-ai-assistant.zip` and click **Install Now**.
 3. Click **Activate**.
-4. You land on **HTECH AI Assistant → Overview**.
+4. You land on **Free Website Chatbot AI by HTECH → Overview**.
 
 The plugin creates its own six database tables and adds six sections of clearly-labelled sample content so the widget can answer something immediately. Replace that sample text with your real information — see the [setup guide](docs/02-setup-guide.md).
 

@@ -50,7 +50,7 @@ class HTECH_AI_Document_Manager {
 	public static function protect_dir( $dir ) {
 		$htaccess = $dir . '/.htaccess';
 		if ( ! file_exists( $htaccess ) ) {
-			$rules = "# HTECH AI Assistant: private document store.\n"
+			$rules = "# Free Website Chatbot AI by HTECH: private document store.\n"
 				. "<IfModule mod_authz_core.c>\n\tRequire all denied\n</IfModule>\n"
 				. "<IfModule !mod_authz_core.c>\n\tOrder allow,deny\n\tDeny from all\n</IfModule>\n";
 			file_put_contents( $htaccess, $rules ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents

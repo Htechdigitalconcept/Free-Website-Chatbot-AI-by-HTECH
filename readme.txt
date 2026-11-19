@@ -1,10 +1,10 @@
-=== HTECH AI Assistant ===
+=== Free Website Chatbot AI by HTECH ===
 Contributors: htechdigital
 Tags: chatbot, ai, knowledge base, customer support, lead generation
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ A self-hosted AI chatbot with a business knowledge base, private document retrie
 
 == Description ==
 
-HTECH AI Assistant adds a premium floating chat widget to your WordPress site and answers visitor questions using **your own business information** — not a generic model guessing at facts.
+Free Website Chatbot AI by HTECH adds a premium floating chat widget to your WordPress site and answers visitor questions using **your own business information** — not a generic model guessing at facts.
 
 **Core features**
 
@@ -40,7 +40,7 @@ HTECH AI Assistant adds a premium floating chat widget to your WordPress site an
 1. In your WordPress dashboard go to **Plugins → Add New → Upload Plugin**.
 2. Choose `htech-ai-assistant.zip` and click **Install Now**.
 3. Click **Activate**.
-4. Open **HTECH AI Assistant → Chatbot Settings** and enter your business details.
+4. Open **Free Website Chatbot AI by HTECH → Chatbot Settings** and enter your business details.
 5. Open **Knowledge Base** and fill in at least Company overview, Services, Pricing (or "quote only") and Contact details.
 6. Upload any PDF/DOCX price lists in **Documents**.
 7. Set your logo and colours in **Appearance & Branding**.

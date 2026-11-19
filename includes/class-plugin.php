@@ -138,7 +138,7 @@ final class HTECH_AI_Plugin {
 		if ( is_wp_error( $uploads ) ) {
 			printf(
 				'<div class="notice notice-error"><p><strong>%s</strong> %s</p></div>',
-				esc_html__( 'HTECH AI Assistant:', 'htech-ai-assistant' ),
+				esc_html__( 'Free Website Chatbot AI by HTECH:', 'htech-ai-assistant' ),
 				esc_html( $uploads->get_error_message() )
 			);
 		}

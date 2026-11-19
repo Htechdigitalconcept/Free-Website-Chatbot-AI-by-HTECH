@@ -1,5 +1,5 @@
 /**
- * HTECH AI Assistant — visitor chat widget (standalone build).
+ * Free Website Chatbot AI by HTECH — visitor chat widget (standalone build).
  *
  * This one file powers three delivery modes:
  *   1. the WordPress plugin (config injected via window.HTECH_AI_CONFIG),
@@ -91,7 +91,7 @@
 			leadSubmit: 'Send details',
 			leadCancel: 'Cancel',
 			sources: 'Source',
-			poweredBy: 'Powered by HTECH AI Assistant',
+			poweredBy: 'Powered by Free Website Chatbot AI by HTECH',
 			modelReady: 'AI ready'
 		}
 	};
