@@ -1,0 +1,127 @@
+# Security & privacy
+
+This plugin holds visitor conversations, contact details and your business documents. This document states plainly what it does with them.
+
+---
+
+## What is stored, and where
+
+| Data | Location | Encrypted? | Retention |
+| --- | --- | --- | --- |
+| Conversations (session keys, timestamps) | Your WordPress database, `{prefix}htech_ai_conversations` | No — depends on your DB | Configurable, default 90 days |
+| Messages (visitor and assistant text) | `{prefix}htech_ai_messages` | No | Configurable, default 90 days |
+| Leads (name, email, phone, service, description) | `{prefix}htech_ai_leads` | No | Configurable, default 365 days |
+| Uploaded documents (originals) | `wp-content/uploads/htech-ai-assistant/` | No | Until deleted |
+| Document text and index chunks | `{prefix}htech_ai_documents`, `{prefix}htech_ai_chunks` | No | Until deleted |
+| Knowledge base content | WordPress option `htech_ai_settings` | No | Until deleted |
+| Settings | WordPress option `htech_ai_settings` | No | Until deleted |
+
+Encryption is not applied because key management inside a plugin is security theatre — the key would have to live in the same database or filesystem as the data. Use your host's disk encryption and database backups if this matters to you.
+
+**Nothing is sent to HTECH.** There is no central service, no telemetry, no analytics endpoint, no phone-home of any kind. The plugin works with outbound HTTP disabled, except for the optional Google Fonts stylesheet and the optional WebLLM CDN — both of which you can turn off or that are only fetched on explicit user action.
+
+---
+
+## What the assistant sends where
+
+| Mode | Where the visitor's question goes |
+| --- | --- |
+| Knowledge base (default) | Nowhere. It is matched on your server. |
+| On-device AI (optional) | Nowhere. The model runs in the visitor's browser; only the retrieved facts and the question enter the model's context, locally. |
+
+In both modes the finished answer is saved to your database so you can review conversations — unless you turn transcript storage off.
+
+---
+
+## Deleting data
+
+Three levels, all without uninstalling:
+
+1. **Per item** — delete a single conversation, document, or lead from its screen.
+2. **Bulk** — General Settings → Danger zone: delete all conversations, all leads, all documents, or reset the knowledge base.
+3. **Everything** — enable **Delete all data when the plugin is uninstalled**, then delete the plugin.
+
+Retention does the rest automatically: a daily WP-Cron job removes conversations and leads older than your configured windows. Setting the window to `0` keeps data indefinitely — a deliberate choice, not the default.
+
+**Deleting a document deletes the stored original file as well as its index chunks.** If you might need the file, keep your own copy — which you should be doing anyway.
+
+---
+
+## Access control
+
+Every admin action requires:
+
+- **A capability check** — `manage_options` for every screen and every mutating endpoint.
+- **A nonce** — WordPress's REST nonce for admin REST calls, `admin-post.php` action nonces for form submissions.
+- **Escaping on output** and **sanitisation on input** — every value, including values that originate from your own database.
+
+Public endpoints are intentionally open to anonymous visitors (that is the point of a chat widget) and are protected by:
+
+- a plugin-scoped nonce in a custom header (`X-Htech-Nonce`), which prevents casual cross-site abuse without the cookie pitfalls of `X-WP-Nonce`;
+- per-IP rate limiting (default 20 messages/minute, 30 knowledge-snapshot fetches/hour);
+- strict input length caps.
+
+There is no endpoint that returns stored conversations, leads, settings or document contents to an unauthenticated visitor. The one public knowledge export (`/standalone-config`) returns only content you deliberately made searchable, and can be disabled with the `htech_ai_enable_standalone_config` filter.
+
+---
+
+## Injection defences
+
+**SQL.** Every query with variable input uses `$wpdb->prepare()`. Table names are built from a constant prefix, never from input. `LIKE` patterns and IDs are cast and escaped.
+
+**XSS.** Output is escaped with the correct function for context: `esc_html`, `esc_attr`, `esc_url`, `wp_kses_post`. The widget writes into a Shadow DOM using `textContent` for visitor and model text — model output is never interpolated as HTML, so an injected `<script>` or `<img onerror>` renders as literal text.
+
+**CSRF.** Nonces on every state-changing operation, verified before any write.
+
+**File upload.** Extensions are allow-listed, the declared MIME type must match, and magic bytes are checked (a `.pdf` must start with `%PDF`, a `.docx` must be a ZIP container). Uploaded files are never executed and are stored outside any executable path with an access-denying directory guard. The original filename never becomes the stored filename.
+
+**Path traversal.** Stored filenames are generated by the plugin. No user-supplied path component reaches the filesystem.
+
+**CSV injection.** Exported lead values that begin with `=`, `+`, `-` or `@` are prefixed with an apostrophe, so a lead named `=HYPERLINK(...)` cannot execute when the CSV is opened in Excel or Sheets.
+
+**SSRF.** The website importer accepts only `http`/`https` URLs, resolves them, and **refuses private, loopback, link-local and reserved address ranges**. `file://`, `127.0.0.1`, `169.254.x.x`, and internal hostnames are rejected, so the importer cannot be used to probe your server's internal network.
+
+**Prompt injection.** Uploaded documents and visitor messages are untrusted. Extracted text is delimited as data with an explicit instruction that it is never an instruction, and — more importantly — the post-generation guardrails reject any answer containing a figure, policy or citation that is not present in the retrieved context. An injected instruction cannot make the assistant state a price that is not in your content.
+
+**Privilege escalation.** Capability checks happen server-side on every request. SVG upload is restricted to Administrators because SVG can carry script; lower roles cannot upload it through the media library.
+
+---
+
+## Rate limiting
+
+A fixed-window counter per IP, stored in your database:
+
+| Endpoint | Limit | Window |
+| --- | --- | --- |
+| `POST /chat/message` | 20 | 1 minute |
+| `POST /lead` | 5 | 10 minutes |
+| `POST /chat/reset` | 20 | 1 minute |
+| `GET /standalone-config` | 30 | 1 hour |
+
+Exceeding a limit returns HTTP 429 with `htech_rate_limited`. Limits are per IP, which means a shared office NAT shares one budget — raise the limit if that affects you.
+
+---
+
+## Hardening recommendations
+
+- Serve the site over HTTPS. The widget and its API should never run on plain HTTP.
+- Keep WordPress, PHP and this plugin updated.
+- Use an account with only the capabilities it needs for day-to-day content editing; `manage_options` should be Administrator-only.
+- On Nginx, add a deny rule for `/wp-content/uploads/htech-ai-assistant/` — the plugin can write Apache `.htaccess` but not Nginx configuration.
+- Review **Conversations** periodically; if visitors are pasting sensitive information into the chat, tighten your welcome message to say what should not be shared.
+- Set a retention window that matches your actual obligations rather than keeping conversations forever.
+
+---
+
+## GDPR / NDPR notes
+
+The plugin gives you the mechanisms these regimes require, but compliance is a policy decision that depends on your jurisdiction and your business:
+
+- **Data minimisation** — no visitor account, no IP address stored with messages, no tracking pixel. IPs are used transiently for rate limiting only (a hash bucket, not the raw IP in the transcript).
+- **Right of access** — the Conversations screen shows everything stored about a visitor's session; the CSV export covers leads.
+- **Right to erasure** — delete a conversation or lead individually, or run the bulk delete.
+- **Storage limitation** — retention windows with automatic deletion.
+- **Transparency** — the widget states plainly that answers are matched from business knowledge, not generated by AI (unless you enable AI mode, in which case it labels answers as AI-generated).
+- **No international transfer** — data does not leave your server, so there is no processor to name in your privacy policy for chat data.
+
+You should still add a short privacy notice to your site's privacy policy describing the chat widget, what you store, and how a visitor can request deletion.

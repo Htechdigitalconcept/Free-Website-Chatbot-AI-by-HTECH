@@ -1,0 +1,129 @@
+/**
+ * HTECH AI Assistant — host-level widget styles.
+ *
+ * These rules style the two host elements that the plugin adds to the page
+ * (#htech-ai-launcher and #htech-ai-panel). Everything *inside* the widget is
+ * rendered in a Shadow DOM with its own stylesheet, so the customer's theme
+ * cannot break the widget and the widget cannot leak styles into their site.
+ *
+ * Colour and typography values are injected at runtime from the saved settings.
+ */
+
+/* ------------------------------------------------------------------ hosts */
+
+#htech-ai-launcher,
+#htech-ai-panel {
+	/* Reset anything an aggressive theme might apply to injected elements. */
+	all: initial;
+	box-sizing: border-box;
+	font-family: inherit;
+	direction: ltr;
+	text-align: left;
+	line-height: normal;
+	-webkit-font-smoothing: antialiased;
+	text-size-adjust: 100%;
+}
+
+#htech-ai-launcher {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 2147483000;
+	display: block;
+	width: auto;
+	height: auto;
+	background: transparent;
+	animation: htech-ai-launcher-in 0.35s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+#htech-ai-launcher[data-position="bottom-left"] {
+	right: auto;
+	left: 20px;
+}
+
+#htech-ai-panel {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	z-index: 2147483001;
+	width: auto;
+	height: auto;
+	pointer-events: none;
+}
+
+#htech-ai-panel[data-position="bottom-left"] {
+	right: auto;
+	left: 20px;
+}
+
+/* Shortcode / inline embeds: positioned by the theme, not fixed. */
+.htech-ai-embed-mount[data-htech-mode="inline"] {
+	position: static;
+	width: 100%;
+	pointer-events: auto;
+}
+
+.htech-ai-embed-launcher[data-htech-mode="floating"] {
+	position: static;
+	display: block;
+}
+
+.htech-ai-shortcode-wrap {
+	position: relative;
+	margin: 24px 0;
+}
+
+.htech-ai-shortcode-inline .htech-ai-embed-mount {
+	min-height: 480px;
+	border-radius: 16px;
+	overflow: hidden;
+	background: #f4f7fb;
+}
+
+.htech-ai-shortcode-title {
+	margin: 0 0 10px;
+	font-size: 1.05em;
+}
+
+/* Keep the widget usable when a page zooms heavily. */
+@media screen and (max-width: 480px) {
+	#htech-ai-launcher {
+		bottom: 14px;
+		right: 14px;
+	}
+
+	#htech-ai-launcher[data-position="bottom-left"] {
+		left: 14px;
+	}
+
+	#htech-ai-panel {
+		bottom: 0;
+		right: 0;
+		left: 0;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#htech-ai-launcher {
+		animation: none;
+	}
+}
+
+@keyframes htech-ai-launcher-in {
+	from {
+		opacity: 0;
+		transform: translateY(12px) scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* Print: never print the widget. */
+@media print {
+	#htech-ai-launcher,
+	#htech-ai-panel {
+		display: none !important;
+	}
+}

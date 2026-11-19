@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HTECH AI Assistant — build knowledge.json</title>
+<style>
+	:root { --navy:#0A1F44; --cyan:#00B4D8; }
+	* { box-sizing: border-box; }
+	body {
+		margin: 0; font-family: Inter, -apple-system, "Segoe UI", Roboto, sans-serif;
+		background: #F5F7FA; color: var(--navy); line-height: 1.6;
+	}
+	header { background: linear-gradient(135deg, var(--navy), #123a70); color: #fff; padding: 32px 24px; }
+	.wrap { max-width: 880px; margin: 0 auto; }
+	h1 { margin: 0 0 6px; font-size: 26px; }
+	header p { margin: 0; opacity: .82; font-size: 14.5px; }
+	main { max-width: 880px; margin: 0 auto; padding: 26px 24px 100px; }
+	.card { background: #fff; border: 1px solid #DCE3EC; border-radius: 14px; padding: 22px 24px; margin-bottom: 18px; }
+	.card h2 { margin: 0 0 6px; font-size: 16.5px; }
+	.card p.hint { margin: 0 0 14px; font-size: 13.5px; color: #5B6B85; }
+	label { display: block; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #5B6B85; margin: 14px 0 5px; }
+	input[type="text"], input[type="number"], textarea {
+		width: 100%; padding: 10px 12px; border: 1px solid #DCE3EC; border-radius: 9px;
+		font-family: inherit; font-size: 14.5px; color: var(--navy); background: #fff;
+	}
+	textarea { resize: vertical; min-height: 84px; }
+	input:focus, textarea:focus { outline: 2px solid rgba(0,180,216,.32); border-color: var(--cyan); }
+	button {
+		background: var(--cyan); color: #06263d; border: 0; border-radius: 10px;
+		padding: 11px 20px; font-size: 14.5px; font-weight: 700; cursor: pointer; font-family: inherit;
+	}
+	button.secondary { background: #EEF2F7; color: var(--navy); }
+	button:disabled { opacity: .55; cursor: not-allowed; }
+	button:hover:not(:disabled) { filter: brightness(1.05); }
+	.drop {
+		border: 2px dashed #C3D0E0; border-radius: 12px; padding: 26px;
+		text-align: center; color: #5B6B85; font-size: 14px; background: #FBFCFE;
+		transition: border-color .15s, background .15s;
+	}
+	.drop.over { border-color: var(--cyan); background: #F0FBFE; }
+	table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 14px; }
+	th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid #EEF2F7; }
+	th { font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: #7A8BA3; }
+	.row-actions { display: flex; gap: 8px; align-items: center; }
+	.summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 12px; margin: 14px 0 0; }
+	.summary div { background: #F5F8FC; border-radius: 10px; padding: 12px 14px; }
+	.summary span { display: block; font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: #7A8BA3; }
+	.summary b { font-size: 20px; }
+	.err { color: #B42318; font-size: 13.5px; }
+	.ok { color: #067647; font-size: 13.5px; }
+	#log { font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; color: #5B6B85; max-height: 150px; overflow: auto; }
+</style>
+</head>
+<body>
+
+<header>
+	<div class="wrap">
+		<h1>Build your knowledge file</h1>
+		<p>Drop PDF, DOCX, TXT or CSV files and get a ready-to-use <code>knowledge.json</code>. Everything happens in this browser — nothing is uploaded anywhere.</p>
+	</div>
+</header>
+
+<main>
+	<div class="card">
+		<h2>1 · Business details</h2>
+		<p class="hint">These become the widget's identity and are added to the knowledge file as context.</p>
+		<label for="biz-name">Business name</label>
+		<input type="text" id="biz-name" placeholder="HTECH Digital Solutions">
+		<label for="biz-desc">One-line description</label>
+		<input type="text" id="biz-desc" placeholder="A Lagos-based digital agency offering websites, branding and marketing.">
+		<label for="biz-overview">About the business (optional)</label>
+		<textarea id="biz-overview" placeholder="Founding year, location, who you serve, what makes you different…"></textarea>
+	</div>
+
+	<div class="card">
+		<h2>2 · Documents</h2>
+		<p class="hint">Supported: PDF, DOCX, TXT, CSV, MD, JSON. Scanned PDFs (images only) have no text to extract — add a TXT version instead.</p>
+		<div class="drop" id="drop">
+			<strong>Drop files here</strong><br>or <button class="secondary" id="pick" type="button">choose files</button>
+			<input type="file" id="file" multiple accept=".pdf,.docx,.txt,.csv,.md,.json" hidden>
+		</div>
+		<table id="tbl" hidden>
+			<thead><tr><th>File</th><th>Format</th><th>Characters</th><th>Chunks</th><th></th></tr></thead>
+			<tbody id="tbody"></tbody>
+		</table>
+		<div id="log"></div>
+	</div>
+
+	<div class="card">
+		<h2>3 · Chunking</h2>
+		<p class="hint">Smaller chunks give sharper answers; larger chunks keep more context. 900 characters with 120 characters of overlap suits most price lists and policies.</p>
+		<label for="size">Chunk size (characters)</label>
+		<input type="number" id="size" value="900" min="200" max="4000" step="50">
+		<label for="overlap">Overlap (characters)</label>
+		<input type="number" id="overlap" value="120" min="0" max="800" step="20">
+	</div>
+
+	<div class="card">
+		<h2>4 · Export</h2>
+		<p class="hint">Download <code>knowledge.json</code> and save it next to <code>standalone.js</code>.</p>
+		<div class="summary">
+			<div><span>Documents</span><b id="sum-docs">0</b></div>
+			<div><span>Chunks</span><b id="sum-chunks">0</b></div>
+			<div><span>Characters</span><b id="sum-chars">0</b></div>
+		</div>
+		<p style="margin-top:16px">
+			<button id="export" disabled>Download knowledge.json</button>
+			<button class="secondary" id="preview" disabled>Preview</button>
+		</p>
+		<p id="msg" class="ok"></p>
+	</div>
+</main>
+
+<script src="utils/chunker.js"></script>
+<script src="utils/retrieval.js"></script>
+<script>
+(function () {
+	'use strict';
+
+	var assetPath = 'assets/';
+	var docs = [];
+	var fileInput = document.getElementById('file');
+	var drop = document.getElementById('drop');
+	var tbl = document.getElementById('tbl');
+	var tbody = document.getElementById('tbody');
+	var log = document.getElementById('log');
+	var msg = document.getElementById('msg');
+
+	function note(text, isError) {
+		var line = document.createElement('div');
+		line.textContent = text;
+		if (isError) { line.className = 'err'; }
+		log.appendChild(line);
+		log.scrollTop = log.scrollHeight;
+	}
+
+	function chunkSize() { return parseInt(document.getElementById('size').value, 10) || 900; }
+	function overlapSize() { return parseInt(document.getElementById('overlap').value, 10) || 0; }
+
+	function refreshSummary() {
+		var chunks = 0;
+		var chars = 0;
+
+		docs.forEach(function (doc) {
+			chunks += doc.chunks.length;
+			chars += doc.text.length;
+		});
+
+		document.getElementById('sum-docs').textContent = docs.length;
+		document.getElementById('sum-chunks').textContent = chunks;
+		document.getElementById('sum-chars').textContent = chars.toLocaleString();
+		document.getElementById('export').disabled = chunks === 0;
+		document.getElementById('preview').disabled = chunks === 0;
+	}
+
+	function renderTable() {
+		tbody.textContent = '';
+		tbl.hidden = docs.length === 0;
+
+		docs.forEach(function (doc, index) {
+			var tr = document.createElement('tr');
+
+			var name = document.createElement('td');
+			name.textContent = doc.name;
+
+			var format = document.createElement('td');
+			format.textContent = doc.ext.toUpperCase();
+
+			var chars = document.createElement('td');
+			chars.textContent = doc.text.length.toLocaleString();
+
+			var chunks = document.createElement('td');
+			chunks.textContent = doc.chunks.length;
+
+			var actions = document.createElement('td');
+			var remove = document.createElement('button');
+			remove.className = 'secondary';
+			remove.textContent = 'Remove';
+			remove.addEventListener('click', function () {
+				docs.splice(index, 1);
+				renderTable();
+				refreshSummary();
+			});
+			actions.appendChild(remove);
+
+			tr.appendChild(name);
+			tr.appendChild(format);
+			tr.appendChild(chars);
+			tr.appendChild(chunks);
+			tr.appendChild(actions);
+			tbody.appendChild(tr);
+		});
+	}
+
+	function handleFiles(files) {
+		Array.prototype.forEach.call(files, function (file) {
+			var ext = (file.name.split('.').pop() || '').toLowerCase();
+
+			if (['pdf', 'docx', 'txt', 'csv', 'md', 'json'].indexOf(ext) === -1) {
+				note('Skipped ' + file.name + ' — unsupported format.', true);
+				return;
+			}
+
+			if (file.size > 20 * 1024 * 1024) {
+				note('Skipped ' + file.name + ' — larger than 20 MB.', true);
+				return;
+			}
+
+			note('Reading ' + file.name + '…');
+
+			window.HTECH_AI_Chunker.extract(file, assetPath).then(function (text) {
+				if (!text || text.trim().length < 40) {
+					note(file.name + ': no readable text found (a scanned PDF?).', true);
+					return;
+				}
+
+				var chunks = window.HTECH_AI_Chunker.split(text, chunkSize(), overlapSize(), ext === 'csv');
+				var isCsv = ext === 'csv';
+
+				docs.push({
+					name: file.name,
+					ext: ext,
+					text: text,
+					chunks: isCsv ? window.HTECH_AI_Chunker.split(text, chunkSize(), 0, true) : chunks
+				});
+
+				note(file.name + ': ' + text.length.toLocaleString() + ' characters → ' + docs[docs.length - 1].chunks.length + ' chunks.');
+				renderTable();
+				refreshSummary();
+			}).catch(function (error) {
+				note(file.name + ': ' + error.message, true);
+			});
+		});
+	}
+
+	function buildPayload() {
+		var items = [];
+		var faqs = [];
+		var bizName = document.getElementById('biz-name').value.trim() || 'Business';
+		var bizDesc = document.getElementById('biz-desc').value.trim();
+		var overview = document.getElementById('biz-overview').value.trim();
+
+		if (overview) {
+			items.push({ s: 'kb', l: 'About ' + bizName, t: overview });
+		}
+
+		if (bizDesc) {
+			items.push({ s: 'kb', l: 'Company overview', t: bizName + ' — ' + bizDesc });
+		}
+
+		docs.forEach(function (doc) {
+			doc.chunks.forEach(function (chunk, index) {
+				items.push({
+					s: 'doc',
+					l: doc.name.replace(/\.[^.]+$/, ''),
+					t: chunk,
+					i: index
+				});
+			});
+		});
+
+		// Attach pre-computed term data so the runtime skips tokenisation.
+		items = items.map(function (item) {
+			var data = window.HTECH_AI_Retrieval.buildTermData(item.t);
+			return { s: item.s, l: item.l, t: item.t, f: data.terms, n: data.len };
+		});
+
+		return {
+			version: '1.0.0',
+			generated: new Date().toISOString(),
+			generator: 'HTECH AI Assistant standalone builder',
+			business: { name: bizName, description: bizDesc },
+			count: items.length,
+			items: items,
+			faqs: faqs
+		};
+	}
+
+	document.getElementById('pick').addEventListener('click', function (event) {
+		event.stopPropagation();
+		fileInput.click();
+	});
+	drop.addEventListener('click', function () { fileInput.click(); });
+	fileInput.addEventListener('change', function () { handleFiles(fileInput.files); fileInput.value = ''; });
+
+	['dragenter', 'dragover'].forEach(function (evt) {
+		drop.addEventListener(evt, function (event) {
+			event.preventDefault();
+			drop.classList.add('over');
+		});
+	});
+
+	['dragleave', 'drop'].forEach(function (evt) {
+		drop.addEventListener(evt, function (event) {
+			event.preventDefault();
+			drop.classList.remove('over');
+		});
+	});
+
+	drop.addEventListener('drop', function (event) {
+		if (event.dataTransfer && event.dataTransfer.files) { handleFiles(event.dataTransfer.files); }
+	});
+
+	document.getElementById('size').addEventListener('change', function () {
+		msg.textContent = 'Chunk size changed — re-add your files to apply it.';
+		msg.className = 'err';
+	});
+
+	document.getElementById('export').addEventListener('click', function () {
+		var payload = buildPayload();
+		var blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+		var url = URL.createObjectURL(blob);
+		var link = document.createElement('a');
+		link.href = url;
+		link.download = 'knowledge.json';
+		document.body.appendChild(link);
+		link.click();
+		link.remove();
+		URL.revokeObjectURL(url);
+
+		msg.className = 'ok';
+		msg.textContent = 'Created knowledge.json with ' + payload.items.length + ' searchable chunks.';
+	});
+
+	document.getElementById('preview').addEventListener('click', function () {
+		var payload = buildPayload();
+
+		// Prove the export actually answers questions before the user ships it.
+		var index = window.HTECH_AI_Retrieval.buildIndex(payload.items, []);
+		var probe = (document.getElementById('biz-desc').value || 'services').split(' ')[0];
+		var results = window.HTECH_AI_Retrieval.search(index, probe, { topK: 2 });
+
+		alert(
+			'Knowledge file preview\n\n' +
+			'Documents: ' + docs.length + '\n' +
+			'Chunks: ' + payload.items.length + '\n\n' +
+			'Test search for "' + probe + '":\n' +
+			(results.length
+				? results.map(function (r) { return '• ' + r.label + ' (score ' + r.score + ')\n  ' + r.text.replace(/\s+/g, ' ').slice(0, 120); }).join('\n\n')
+				: 'No matches — the files may be too small or unrelated.')
+		);
+	});
+})();
+</script>
+</body>
+</html>

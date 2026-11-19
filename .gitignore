@@ -1,0 +1,48 @@
+# Build artifacts and preview directories
+dist/
+node_modules/
+build/
+out/
+
+# Local/test only — never ship these
+.test/
+.test-wp/
+wp-content/
+*.sqlite
+*.sqlite3
+*.db
+
+# Test shims (the mu-plugin auth bypass used during development)
+test-auth.php
+mu-plugins/
+
+# Logs and temp files
+*.log
+/tmp/
+.DS_Store
+__MACOSX/
+Thumbs.db
+
+# Editor and OS noise
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment and credentials
+.env
+.env.*
+!.env.example
+.netrc
+.git-credentials
+
+# Dependency caches
+.cache/
+.venv/
+__pycache__/
+*.pyc
+
+# Screenshots captured during testing
+.test/shots/
+screenshots/
